@@ -1,6 +1,6 @@
 // app/OnyxTest.tsx
-import { useOnyx } from "@/react-native-onyx";
-import Onyx from "@/react-native-onyx/Onyx";
+import { useOnyx } from "@/react-native-legend-onyx";
+import Onyx from "@/react-native-legend-onyx/Onyx";
 import React from "react";
 import { Button, ScrollView, Text, View } from "react-native";
 
