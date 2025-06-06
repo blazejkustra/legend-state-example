@@ -21,16 +21,18 @@ function connect({
   key: string;
   callback: (value: any, key: string) => void;
 }) {
-  return observe(getObservableDataForKey(key), (e) => {
+  const disconnect = observe(getObservableDataForKey(key), (e) => {
     callback(e.value, key);
   });
+
+  return { disconnect };
 }
 
-function disconnect(connection: () => void) {
-  connection();
+function disconnect(connection: { disconnect: () => void }) {
+  connection?.disconnect?.();
 }
 
-function set(key: string, value: any) {
+async function set(key: string, value: any) {
   if (value === null) {
     return getObservableDataForKey(key).delete();
   }
@@ -38,7 +40,7 @@ function set(key: string, value: any) {
   getObservableDataForKey(key).set(value);
 }
 
-function multiSet(values: Record<string, any>) {
+async function multiSet(values: Record<string, any>) {
   beginBatch();
   for (const [key, value] of Object.entries(values)) {
     set(key, value);
@@ -46,7 +48,7 @@ function multiSet(values: Record<string, any>) {
   endBatch();
 }
 
-function merge(key: string, value: any) {
+async function merge(key: string, value: any) {
   if (value === null) {
     return getObservableDataForKey(key).delete();
   }
@@ -54,7 +56,7 @@ function merge(key: string, value: any) {
   mergeIntoObservable(getObservableDataForKey(key), value);
 }
 
-function mergeCollection(_key: string, values: Record<string, any>) {
+async function mergeCollection(_key: string, values: Record<string, any>) {
   beginBatch();
   for (const [key, value] of Object.entries(values)) {
     merge(key, value);
@@ -62,11 +64,11 @@ function mergeCollection(_key: string, values: Record<string, any>) {
   endBatch();
 }
 
-function setCollection(key: string, values: Record<string, any>) {
+async function setCollection(key: string, values: Record<string, any>) {
   getObservableDataForKey(key).set(values);
 }
 
-function update(
+async function update(
   updates: {
     onyxMethod: (typeof METHOD)[keyof typeof METHOD];
     key: string;
@@ -101,11 +103,11 @@ function update(
   endBatch();
 }
 
-function clear() {
+async function clear() {
   observableData.set({ ...defaultKeyStates });
 }
 
-function init({
+async function init({
   keys = {},
   initialKeyStates = {},
 }: {
@@ -121,7 +123,7 @@ function init({
   });
 }
 
-function get(key: string) {
+async function get(key: string) {
   return getObservableDataForKey(key).get();
 }
 
@@ -150,3 +152,5 @@ export default Onyx;
 // - Evictable keys
 // - Snapshots
 // - persistence
+// - [isOnyxMigrated, setIsOnyxMigrated] = useState(true);
+// disconnect inside of connect

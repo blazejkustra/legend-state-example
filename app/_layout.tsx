@@ -1,6 +1,5 @@
 // app/OnyxTest.tsx
-import { useOnyx } from "@/react-native-legend-onyx";
-import Onyx from "@/react-native-legend-onyx/Onyx";
+import Onyx, { useOnyx } from "@/react-native-legend-onyx/dist/index";
 import React from "react";
 import { Button, ScrollView, Text, View } from "react-native";
 
@@ -19,6 +18,14 @@ Onyx.init({
       reports_1: { name: "report 1" },
       reports_2: { name: "report 2" },
     },
+  },
+});
+
+const connection = Onyx.connect({
+  key: "test",
+  callback: (value) => {
+    Onyx.disconnect(connection);
+    console.log("test", value);
   },
 });
 

@@ -1,0 +1,27 @@
+{
+  "compilerOptions": {
+    "outDir": "./react-native-legend-onyx/dist",
+    "rootDir": "./react-native-legend-onyx",
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "module": "commonjs",
+    "target": "es2018",
+    "lib": ["es2018", "dom"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "resolveJsonModule": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": false
+  },
+  "include": [
+    "react-native-legend-onyx/**/*.ts",
+    "react-native-legend-onyx/**/*.tsx"
+  ],
+  "exclude": [
+    "node_modules",
+    "react-native-legend-onyx/dist"
+  ]
+} 
