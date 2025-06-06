@@ -59,15 +59,20 @@ export default function withOnyx(mapOnyxToState: any) {
       }
 
       render() {
-        console.log("render", this.state);
+        const { forwardedRef, ...rest } = this.props;
 
-        return React.createElement(WrappedComponent, {
-          ...this.props,
-          ...this.state,
-        });
+        return (
+          <WrappedComponent ref={forwardedRef} {...rest} {...this.state} />
+        );
       }
     }
 
-    return WithOnyx;
+    function forwardRefWrapper(props: any, ref: React.Ref<any>) {
+      return <WithOnyx {...props} forwardedRef={ref} />;
+    }
+
+    forwardRefWrapper.displayName = `withOnyx(${displayName})`;
+
+    return React.forwardRef(forwardRefWrapper);
   };
 }

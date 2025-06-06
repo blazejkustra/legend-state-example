@@ -14,7 +14,8 @@
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "noEmit": false
+    "noEmit": false,
+    "jsx": "react"
   },
   "include": [
     "react-native-legend-onyx/**/*.ts",
