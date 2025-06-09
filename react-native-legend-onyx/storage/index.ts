@@ -1,13 +1,14 @@
 import { observable } from "@legendapp/state";
-import { observablePersistAsyncStorage } from "@legendapp/state/persist-plugins/async-storage";
 import { configureSynced } from "@legendapp/state/sync";
-import AsyncStorage from "@react-native-async-storage/async-storage/lib/commonjs/AsyncStorage";
+import { observablePersistIndexedDB } from "./indexedDB";
 import { OnyxData } from "./types";
 
 const persistOptions = configureSynced({
   persist: {
-    plugin: observablePersistAsyncStorage({
-      AsyncStorage,
+    plugin: observablePersistIndexedDB({
+      databaseName: "react-native-legend-onyx",
+      version: 1,
+      tableNames: ["legend-onyx"],
     }),
   },
 });

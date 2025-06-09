@@ -104,7 +104,7 @@ async function update(
 }
 
 async function clear() {
-  observableData.set({ ...defaultKeyStates });
+  observableData.set(JSON.parse(JSON.stringify(defaultKeyStates)));
 }
 
 async function init({
@@ -114,11 +114,11 @@ async function init({
   keys: Record<string, any>;
   initialKeyStates: Record<string, any>;
 }) {
-  defaultKeyStates = { ...initialKeyStates };
+  defaultKeyStates = initialKeyStates;
 
   when(observableDataSyncState.isPersistLoaded, () => {
     if (Object.keys(observableData.get()).length === 0) {
-      observableData.set(initialKeyStates);
+      observableData.set(JSON.parse(JSON.stringify(defaultKeyStates)));
     }
   });
 }
